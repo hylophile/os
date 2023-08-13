@@ -1,0 +1,82 @@
+name: build-image
+on:
+  push:
+  schedule:
+    - cron: "0 0 * * *" # every day at midnight
+
+env:
+  IMAGE_NAME: os
+  IMAGE_TAGS: latest ${{ github.sha }}
+  IMAGE_REGISTRY: ghcr.io/${{ github.repository_owner }}
+  REGISTRY_USER: ${{ github.actor }}
+  REGISTRY_PASSWORD: ${{ github.token }}
+
+jobs:
+  push-ghcr:
+    name: Build and push image
+    runs-on: ubuntu-22.04
+
+    strategy:
+      fail-fast: false
+
+    outputs:
+      previous_digest: ${{ steps.compare_digests.outputs.previous }}
+      current_digest: ${{ steps.compare_digests.outputs.current }}
+
+    steps:
+      # Checkout push-to-registry action github repository
+      - name: Checkout Push to Registry action
+        uses: actions/checkout@v3
+
+      # Download last Sericea digest
+      - name: Get previous digest
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: echo $(gh run download -n digest)
+
+      # Compare digests
+      - name: Compare digests
+        id: compare_digests
+        run: |
+          export DIGEST=$(skopeo inspect  --format "{{.Digest}}" docker://quay.io/fedora-ostree-desktops/sericea:39)
+          echo "previous=$(< digest.txt)" >> "$GITHUB_OUTPUT"
+          echo "current=$DIGEST" >> "$GITHUB_OUTPUT"
+          echo $DIGEST > digest.txt
+
+      # Update new Sericea digest
+      - name: Update new digest
+        uses: actions/upload-artifact@v3
+        with:
+          name: digest
+          path: digest.txt
+
+      # Print hashes (to verify if a build should occur)
+      - name: Echo digest hashes
+        run: |
+          echo "${{ toJSON(steps.compare_digests.outputs) }}"
+
+      # Build image using Buildah action
+      - name: Build Image
+        uses: redhat-actions/buildah-build@v2
+        id: build_image
+        if: ${{ github.event_name != 'schedule' || steps.compare_digests.previous_digest != steps.compare_digests.current_digest }}
+        with:
+          containerfiles: |
+            ./Containerfile
+          image: ${{ env.IMAGE_NAME }}
+          tags: ${{ env.IMAGE_TAGS }}
+          oci: true
+
+      # Push the image to GHCR (Image Registry)
+      - name: Push To GHCR
+        uses: redhat-actions/push-to-registry@v2
+        if: ${{ github.event_name != 'schedule' || steps.compare_digests.previous_digest != steps.compare_digests.current_digest }}
+        id: push
+        with:
+          image: ${{ steps.build_image.outputs.image }}
+          tags: ${{ steps.build_image.outputs.tags }}
+          registry: ${{ env.IMAGE_REGISTRY }}
+          username: ${{ env.REGISTRY_USER }}
+          password: ${{ env.REGISTRY_PASSWORD }}
+          extra-args: |
+            --disable-content-trust

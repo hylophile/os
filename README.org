@@ -1,0 +1,44 @@
+#+title: OS
+#+author: Ellis Kenyő
+#+date: \today
+#+latex_class: chameleon
+
+[[https://github.com/elken/os/actions/workflows/build-image.yml][https://github.com/elken/os/actions/workflows/build-image.yml/badge.svg]]
+
+My custom fork of [[https://fedoraproject.org/sericea/][Fedora Sericea]] with a few changes & my dotfiles configured on first-boot
+
+* Intro
+This image makes the following changes:
+
+** Replace =toolbox= with =distrobox=
+Over time, I've hit a number of issues with =toolbox= that seem to be either
+=WONTFIX= or in a perpetual state of "someday"; so I instead opt for [[https://github.com/89luca89/distrobox][distrobox]].
+Boasting a larger featureset and resolving every single issue I've had with
+=toolbox=, it's simply a better product.
+
+** Removing the =fedora= flatpak repo
+I'll never want to install anything from here, it's super convenient for most
+but because of things like missing codecs (see below)
+
+** Remove the base =firefox= in favour of flatpak
+Due to licensing issues, Fedora can't ship modern codecs. As such, it becomes a
+hassle having to layer so many packages to get it working and I have instead
+opted for the flathub flatpak version; which has everything I could need.
+
+** Enabling automatic updates
+Now that update issues get picked up in CI, I can safely just have everything
+update all the time.
+
+Likewise for flatpaks with the included =flatpak-automatic= service & timer
+
+** Include the most recent version of =babashka=
+I rely on this for a few things, there's no "proper" packaged version yet so I
+just pull from the official image.
+
+** Includes a number of tools intended to end up in =/usr/local/bin=
+- [[https://yadm.io/][yadm]]
+- [[https://github.com/mortie/swaylock-effects][swaylock-effects]]
+
+* Credits
+- [[https://github.com/ublue-os/main][UBlue]] A project doing something similar on a larger scale. Rather than relying
+  on my changes for me, I encourage you to use theirs instead.
