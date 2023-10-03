@@ -7,7 +7,7 @@ COPY usr /usr
 COPY --from=ghcr.io/babashka/babashka:latest /usr/local/bin/bb /usr/bin/bb
 
 RUN rpm-ostree override remove firefox firefox-langpacks toolbox && \
-    rpm-ostree install bat direnv exa keychain zsh tmux distrobox && \
+    rpm-ostree install bat direnv eza keychain zsh tmux distrobox && \
 
     # Enable automatic update staging
     sed -i 's/#AutomaticUpdatePolicy.*/AutomaticUpdatePolicy=stage/' /etc/rpm-ostreed.conf && \
