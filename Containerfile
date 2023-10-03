@@ -5,6 +5,7 @@ FROM quay.io/fedora-ostree-desktops/sericea:$FEDORA_VERSION
 COPY usr /usr
 
 COPY --from=ghcr.io/babashka/babashka:latest /usr/local/bin/bb /usr/bin/bb
+COPY --from=ghcr.io/charmbracelet/gum:latest /usr/local/bin/gum /usr/bin/gum
 
 RUN rpm-ostree override remove firefox firefox-langpacks toolbox && \
     rpm-ostree install bat direnv eza keychain zsh tmux distrobox && \
