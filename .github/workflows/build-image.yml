@@ -5,7 +5,7 @@ on: push
 
 env:
   IMAGE_NAME: os
-  IMAGE_TAGS: latest ${{ github.sha }}
+  IMAGE_TAGS: 38 latest ${{ github.sha }}
   IMAGE_REGISTRY: ghcr.io/${{ github.repository_owner }}
   REGISTRY_USER: ${{ github.actor }}
   REGISTRY_PASSWORD: ${{ github.token }}
