@@ -1,0 +1,9 @@
+#+title: Plan
+
+These are the steps necessary for my setup:
+
+* clone dotfiles
+** TODO move =scripts= and =azk= somewhere appropriate
+* build eww
+* get wallpapers (?)
+* reload sway
