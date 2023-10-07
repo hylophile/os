@@ -120,7 +120,7 @@ jobs:
         uses: ublue-os/isogenerator@main
         id: isogenerator
         with:
-          image-name: lkn-os
+          image-name: hylos
           installer-repo: releases
           installer-major-version: 38
           boot-menu-path: boot_menu.yml

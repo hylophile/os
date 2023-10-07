@@ -3,7 +3,7 @@
 #+date: \today
 #+latex_class: chameleon
 
-[[https://github.com/elken/os/actions/workflows/build-image.yml][https://github.com/elken/os/actions/workflows/build-image.yml/badge.svg]]
+[[https://github.com/hylophile/os/actions/workflows/build-image.yml][https://github.com/hylophile/os/actions/workflows/build-image.yml/badge.svg]]
 
 My custom image based on [[https://fedoraproject.org/sericea/][Fedora Sericea]] with a few changes & my dotfiles configured on first-boot
 

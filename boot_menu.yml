@@ -1,5 +1,5 @@
 ublue_variants:
-  - label: lkn-os
+  - label: hylos
     ks: /kickstart/ublue-os.ks
     flavors:
       - label: os
