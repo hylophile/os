@@ -1,8 +1,7 @@
 name: build-image
-on:
-  push:
-  schedule:
-    - cron: "0 0 * * *" # every day at midnight
+on: push
+#  schedule:
+#    - cron: "0 0 * * *" # every day at midnight
 
 env:
   IMAGE_NAME: os
