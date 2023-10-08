@@ -6,6 +6,7 @@ COPY usr /usr
 
 COPY --from=ghcr.io/babashka/babashka:latest /usr/local/bin/bb /usr/bin/bb
 COPY --from=ghcr.io/charmbracelet/gum:latest /usr/local/bin/gum /usr/bin/gum
+COPY --from=ghcr.io/hyloyphile/eww:latest /eww /usr/bin/eww
 
 RUN rpm-ostree override remove firefox firefox-langpacks toolbox && \
     rpm-ostree install bat direnv eza keychain zsh tmux distrobox && \
