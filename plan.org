@@ -1,9 +1,47 @@
 #+title: Plan
 
+#+begin_src sh
+rpm-ostree rebase ostree-unverified-registry:ghcr.io/hylophile/os
+#+end_src
+
 These are the steps necessary for my setup:
 
 * clone dotfiles
 ** TODO move =scripts= and =azk= somewhere appropriate
-* build eww
+* DONE build eww
+* set fish shell
+#+begin_src sh
+chsh -s /usr/bin/fish $USER
+#+end_src
+* nerd fonts
+* zoxide wezterm lsd
+* emacs
+** doom
+* eww
+#+begin_src sh
+git clone https://github.com/hylophile/eww-config
+#+end_src
+or just move to dotfiles.
+* tangle configs
 * get wallpapers (?)
 * reload sway
+* fonts
+** jost, (agave), nerd fonts
+** nerd
+#+begin_src sh
+location=$(wget -qO- https://github.com/ryanoasis/nerd-fonts/releases/latest | grep SymbolsOnly.tar.xz | cut -d\" -f 2)
+tar xf NerdFontsSymbolsOnly.tar.xz
+
+wget -q "$location"
+#+end_src
+
+#+begin_src shell
+
+wget -q https://github.com/indestructible-type/Jost/releases/download/3.5/Jost.zip
+unzip Jost.zip
+
+#+end_src
+
+
+#+RESULTS:
+* jost build???
