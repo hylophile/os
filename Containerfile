@@ -6,7 +6,7 @@ FROM quay.io/fedora-ostree-desktops/sericea:$FEDORA_VERSION
 
 COPY --from=ghcr.io/babashka/babashka:latest /usr/local/bin/bb /usr/bin/bb
 COPY --from=ghcr.io/charmbracelet/gum:latest /usr/local/bin/gum /usr/bin/gum
-COPY --from=ghcr.io/hylophile/eww:latest /eww /usr/bin/eww
+COPY --from=ghcr.io/hylophile/containerfiles-eww:latest /eww /usr/bin/eww
 
 RUN rpm-ostree override remove firefox firefox-langpacks toolbox && \
     rpm-ostree install bat direnv keychain fish distrobox && \
