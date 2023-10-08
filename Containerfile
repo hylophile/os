@@ -2,7 +2,7 @@ ARG FEDORA_VERSION=39
 
 FROM quay.io/fedora-ostree-desktops/sericea:$FEDORA_VERSION
 
-COPY usr /usr
+# COPY usr /usr
 
 COPY --from=ghcr.io/babashka/babashka:latest /usr/local/bin/bb /usr/bin/bb
 COPY --from=ghcr.io/charmbracelet/gum:latest /usr/local/bin/gum /usr/bin/gum
